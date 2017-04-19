@@ -8,12 +8,13 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowInsets;
 
 public class StateView extends View {
     private static final String TAG = "StateView";
     private boolean isActive;
-    private State state;
+    private StateEventListener stateEventListener;
 
     public StateView(Context context) {
         this(context, null);
@@ -25,22 +26,16 @@ public class StateView extends View {
 
     public StateView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        state = new State() {
-            @Override
-            public void onStart() {
-                Log.d(TAG, "onStart");
-            }
-
-            @Override
-            public void onStop() {
-                Log.d(TAG, "onStop");
-            }
-        };
+        setLayoutParams(new ViewGroup.LayoutParams(1,1));
     }
 
-    public interface State {
+    public interface StateEventListener {
         void onStart();
         void onStop();
+    }
+
+    public void setStateEventListener(StateEventListener stateEventListener) {
+        this.stateEventListener = stateEventListener;
     }
 
     @Override
@@ -156,9 +151,9 @@ public class StateView extends View {
         if (isActive!=change) {
             isActive = !isActive;
             if (isActive) {
-                state.onStart();
+                stateEventListener.onStart();
             } else {
-                state.onStop();
+                stateEventListener.onStop();
             }
         }
     }

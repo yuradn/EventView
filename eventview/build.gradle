@@ -9,7 +9,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0"
+        versionName "1.2"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -22,10 +22,15 @@ android {
     }
 }
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'EventView'
+}
+
 publish {
     groupId = 'com.github.yuradn'
     artifactId = 'eventview'
-    publishVersion = '1.0'
+    publishVersion = '1.2'
     desc = 'Library that helps a get state of Activity '
     licences = ['Apache-2.0']
     uploadName='EventView'

@@ -150,6 +150,7 @@ public class StateView extends View {
     private void onStateChanged(boolean change) {
         if (isActive!=change) {
             isActive = !isActive;
+            if (stateEventListener == null) return;
             if (isActive) {
                 stateEventListener.onStart();
             } else {
